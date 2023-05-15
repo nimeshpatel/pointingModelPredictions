@@ -4,6 +4,13 @@ from tensorflow import keras
 # Load the training data from the ASCII file
 data = np.loadtxt('./TrainingDataSets/finalTrainingSetNumbered')
 
+#In the input data file the format is as follows:
+# serial No., Ant No (X), Pad No. (Y), AzDC (A), AzTltSin (B), AzTltCos # (C), Unixtime
+# We divide the AzDC values by 100, to make the numbers comparable to
+# the tilt coefficients.
+
+data[:, 3] /= 100.0
+
 # Split the data into input features (X, Y) and target values (A, B, C)
 X_train = data[:, 1:3]   # columns 2 and 3 correspond to X and Y
 y_train = data[:, 3:6]   # columns 4,5, 6 correspond to A, B, and C
@@ -11,10 +18,10 @@ y_train = data[:, 3:6]   # columns 4,5, 6 correspond to A, B, and C
 
 # Define the neural network architecture
 model = keras.Sequential([
+    keras.layers.Dense(256, activation='relu', input_shape=(2,)),
+    keras.layers.Dense(128, activation='relu', input_shape=(2,)),
     keras.layers.Dense(64, activation='relu', input_shape=(2,)),
-    keras.layers.Dense(32, activation='relu', input_shape=(2,)),
-    keras.layers.Dense(16, activation='relu', input_shape=(2,)),
-    keras.layers.Dense(8, activation='relu'),
+    keras.layers.Dense(32, activation='relu'),
     keras.layers.Dense(3)
 ])
 
