@@ -6,10 +6,10 @@ data = np.loadtxt('./TrainingDataSets/finalTrainingSetNumbered')
 
 #In the input data file the format is as follows:
 # serial No., Ant No (X), Pad No. (Y), AzDC (A), AzTltSin (B), AzTltCos # (C), Unixtime
-# We divide the AzDC values by 100, to make the numbers comparable to
+# We divide the AzDC values by 10, to make the numbers comparable to
 # the tilt coefficients.
 
-data[:, 3] /= 100.0
+data[:, 3] /= 10.0
 
 # Split the data into input features (X, Y) and target values (A, B, C)
 X_train = data[:, 1:3]   # columns 2 and 3 correspond to X and Y
@@ -35,7 +35,7 @@ model.compile(optimizer='adam',loss='mse')
 #y_train = np.random.rand(100, 3)
 
 # Train the neural network on the training data
-model.fit(X_train, y_train, epochs=3000, batch_size=16)
+model.fit(X_train, y_train, epochs=600, batch_size=16)
 model.save('model_15may2023.h5')
 
 # Generate some example test data
