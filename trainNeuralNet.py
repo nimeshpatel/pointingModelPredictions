@@ -11,13 +11,17 @@ y_train = data[:, 3:6]   # columns 4,5, 6 correspond to A, B, and C
 
 # Define the neural network architecture
 model = keras.Sequential([
-    keras.layers.Dense(256, activation='relu', input_shape=(2,)),
-    keras.layers.Dense(256, activation='relu'),
+    keras.layers.Dense(64, activation='relu', input_shape=(2,)),
+    keras.layers.Dense(32, activation='relu', input_shape=(2,)),
+    keras.layers.Dense(16, activation='relu', input_shape=(2,)),
+    keras.layers.Dense(8, activation='relu'),
     keras.layers.Dense(3)
 ])
 
 # Compile the model with appropriate loss and optimizer functions
-model.compile(loss='mean_squared_error', optimizer=keras.optimizers.Adam(0.001))
+#model.compile(loss='mean_squared_error', optimizer=keras.optimizers.Adam(0.001))
+
+model.compile(optimizer='adam',loss='mse')
 
 # Generate some example training data
 #X_train = np.random.rand(100, 2)
@@ -25,7 +29,7 @@ model.compile(loss='mean_squared_error', optimizer=keras.optimizers.Adam(0.001))
 
 # Train the neural network on the training data
 model.fit(X_train, y_train, epochs=3000, batch_size=16)
-model.save('model_may2023.h5')
+model.save('model_15may2023.h5')
 
 # Generate some example test data
 #X_test = np.random.rand(10, 2)
